@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: julian <julian@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/07/29 16:01:28 by julian            #+#    #+#             */
+/*   Updated: 2026/07/29 16:01:28 by julian           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "PmergeMe.hpp"
 #include <iostream>
 #include <sstream>
@@ -10,12 +22,6 @@
 #include <iomanip>
 #include <algorithm>
 
-/*
-** Parses one command line token into a positive int.
-** Returns true on success and stores the value in "out".
-** Rejects: empty tokens, non-digit characters (except a leading '+'),
-** values <= 0, and values that overflow an int.
-*/
 static bool parsePositiveInt(const std::string &token, int &out)
 {
 	if (token.empty())
@@ -33,8 +39,6 @@ static bool parsePositiveInt(const std::string &token, int &out)
 			return false;
 	}
 
-	// Parse manually to detect overflow reliably instead of relying on
-	// exceptions from std::stoi/std::stol.
 	long value = 0;
 	for (std::size_t j = i; j < token.size(); ++j)
 	{
@@ -81,8 +85,7 @@ int main(int argc, char **argv)
 		numbers.push_back(value);
 	}
 
-	// Duplicate handling: rejected as invalid input (see subject: "left to
-	// your discretion").
+	
 	std::vector<int> uniquenessCheck = numbers;
 	std::sort(uniquenessCheck.begin(), uniquenessCheck.end());
 	if (std::adjacent_find(uniquenessCheck.begin(), uniquenessCheck.end()) != uniquenessCheck.end())

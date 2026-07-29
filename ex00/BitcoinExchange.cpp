@@ -3,18 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   BitcoinExchange.cpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jvenkata <jvenkata@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julian <julian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 20:41:03 by jvenkata          #+#    #+#             */
-/*   Updated: 2026/04/17 18:55:06 by jvenkata         ###   ########.fr       */
+/*   Updated: 2026/07/29 15:57:13 by julian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "BitcoinExchange.hpp"
-
-
-// Constructors
 
 BitcoinExchange::BitcoinExchange()
 {
@@ -38,7 +35,6 @@ BitcoinExchange::~BitcoinExchange()
 {
 }
 
-// Getters
 std::map<std::string, double> const &BitcoinExchange::getQuotes() const
 {
 	return (_DB);
@@ -52,7 +48,6 @@ void BitcoinExchange::_readDatabase()
 
         std::string line;
 
-        //// Check if first line is date,exchange_rate
         std::getline(file, line);
         if (line != "date,exchange_rate")
             throw InvalidColumnFormat();
@@ -64,7 +59,6 @@ void BitcoinExchange::_readDatabase()
             std::getline(ss, date, ',');
             std::getline(ss, price, ',');
 
-            // Parse price using istringstream
             double priceValue;
             std::istringstream priceStream(price);
             if (!(priceStream >> priceValue))
@@ -82,9 +76,8 @@ void BitcoinExchange::execute(char const *fileName)
 		throw CouldNotOpenFile();
 
 	std::string line;
-
-	// Check if first line is date,exchange_rate
 	std::getline(file, line);
+	
 	if (line != "date | value")
 		throw InvalidColumnFormat();
 
@@ -97,7 +90,6 @@ void BitcoinExchange::execute(char const *fileName)
 		std::getline(ss, date, '|');
 		std::getline(ss, valueStr, '|');
 
-		// Validate date format.
 		if (!date.empty())
 			date = date.erase(date.length() -1);
 		if (_validateDate(date) == false)
@@ -106,7 +98,6 @@ void BitcoinExchange::execute(char const *fileName)
 			continue;
 		}
 
-		// Parse price using istringstream
 		if(!valueStr.empty())
 			valueStr = valueStr.erase(0, 1);
 		priceValue = _validatePrice(valueStr);
@@ -118,7 +109,6 @@ void BitcoinExchange::execute(char const *fileName)
 	file.close();
 }
 
-// Validate date format that it contains only numbers and '-'. And the month block is between 01 and 12 and the day block is between 01 and 31.
 bool BitcoinExchange::_validateDate(std::string const &date)
 {
 	if (date.size() != 10 || date[4] != '-' || date[7] != '-')
@@ -169,7 +159,7 @@ double BitcoinExchange::_validatePrice(std::string const &valueStr)
 	return (priceValue);
 }
 
-// _multiplyWithQuote multiplies the price with the quote of the date. If the date used in the input does not exist in the DB then the closest date contained in the DB is used. (lower date)
+
 void BitcoinExchange::_multiplyWithQuote(std::string const &date, double price)
 {
 	std::map<std::string, double>::iterator it = _DB.find(date);

@@ -1,22 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   PmergeMe.cpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: julian <julian@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/07/29 16:01:34 by julian            #+#    #+#             */
+/*   Updated: 2026/07/29 16:01:34 by julian           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "PmergeMe.hpp"
 #include <algorithm>
 #include <unordered_map>
 #include <utility>
 
-/*
-** ------------------------------------------------------------------------
-** Shared helper
-** ------------------------------------------------------------------------
-** Builds the classic Jacobsthal insertion order used by merge-insertion
-** sort to minimise the number of comparisons needed while inserting the
-** "small" elements into the already sorted chain of "big" elements.
-**
-** Given k pairs, ranks 2..k (rank 1 is always inserted separately, at the
-** very front of the chain) are produced in the order:
-**   3, 2, 5, 4, 11, 10, 9, 8, 7, 6, 21, 20, ..., 12, 43, ...
-** i.e. each "window" bounded by two consecutive Jacobsthal numbers is
-** walked in descending order.
-*/
 std::vector<std::size_t> PmergeMe::jacobsthalInsertOrder(std::size_t pairCount)
 {
 	std::vector<std::size_t> order;
@@ -34,7 +32,7 @@ std::vector<std::size_t> PmergeMe::jacobsthalInsertOrder(std::size_t pairCount)
 		jacobsthal.push_back(next);
 	}
 
-	std::size_t previous = 1; // jacobsthal[1] == 1, ranks start at 2
+	std::size_t previous = 1;
 	for (std::size_t idx = 2; idx < jacobsthal.size(); ++idx)
 	{
 		std::size_t current = std::min(jacobsthal[idx], pairCount);
@@ -84,7 +82,7 @@ namespace vecimpl
 		std::size_t pairCount = n / 2;
 
 		std::vector<int> bigs;
-		std::vector<int> smallOf; // smallOf[i] is the partner of bigs[i]
+		std::vector<int> smallOf; 
 		bigs.reserve(pairCount);
 		smallOf.reserve(pairCount);
 
@@ -100,31 +98,21 @@ namespace vecimpl
 		if (hasStray)
 			stray = input[n - 1];
 
-		// map: big value -> its pairing index (values are unique, see main.cpp validation)
 		std::unordered_map<int, std::size_t> pairIndexOf;
 		pairIndexOf.reserve(pairCount * 2);
 		for (std::size_t i = 0; i < pairCount; ++i)
 			pairIndexOf[bigs[i]] = i;
-
-		// Recursively sort the "big" elements using the very same algorithm.
 		std::vector<int> sortedBigs = fordJohnson(bigs);
-
-		// The chain starts as the recursively sorted bigs.
 		std::vector<int> chain = sortedBigs;
-
-		// Rank 1 (smallest big) partner goes straight to the front.
 		if (pairCount >= 1)
 		{
 			int firstSmall = smallOf[pairIndexOf[chain[0]]];
 			chain.insert(chain.begin(), firstSmall);
 		}
-
-		// Insert every other partner in Jacobsthal order, each one bounded
-		// above by the current position of its own big partner.
 		std::vector<std::size_t> order = PmergeMe::jacobsthalInsertOrder(pairCount);
 		for (std::size_t i = 0; i < order.size(); ++i)
 		{
-			std::size_t rank = order[i]; // 1-based rank into sortedBigs
+			std::size_t rank = order[i];
 			int bigValue = sortedBigs[rank - 1];
 			int smallValue = smallOf[pairIndexOf[bigValue]];
 

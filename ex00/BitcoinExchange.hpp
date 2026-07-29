@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   BitcoinExchange.hpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jvenkata <jvenkata@student.42.fr>          +#+  +:+       +#+        */
+/*   By: julian <julian@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 18:49:53 by jvenkata          #+#    #+#             */
-/*   Updated: 2026/04/17 18:54:59 by jvenkata         ###   ########.fr       */
+/*   Updated: 2026/07/29 15:57:20 by julian           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ class BitcoinExchange
 		void _multiplyWithQuote(std::string const &date, double price);
 		
 
-		// Exceptions which printing error message
 		class CouldNotOpenFile : public std::exception
 		{
 			public:
