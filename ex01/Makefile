@@ -1,12 +1,12 @@
 NAME		= RPN
-SRC			= rpn.c
-CC			= cc
-CFLAGS		= -Wall -Wextra -Werror
+SRC			= rpn.cpp
+CXX			= c++
+CXXFLAGS	= -Wall -Wextra -Werror -std=c++98
 
 all: $(NAME)
 
 $(NAME): $(SRC)
-	$(CC) $(CFLAGS) $(SRC) -o $(NAME)
+	$(CXX) $(CXXFLAGS) $(SRC) -o $(NAME)
 
 clean:
 
