@@ -1,22 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   PmergeMe.cpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jvenkata <jvenkata@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/08/04 10:20:55 by jvenkata          #+#    #+#             */
+/*   Updated: 2026/08/04 10:20:56 by jvenkata         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "PmergeMe.hpp"
 #include <algorithm>
 #include <map>
 #include <utility>
 
-/*
-** ------------------------------------------------------------------------
-** Shared helper
-** ------------------------------------------------------------------------
-** Builds the classic Jacobsthal insertion order used by merge-insertion
-** sort to minimise the number of comparisons needed while inserting the
-** "small" elements into the already sorted chain of "big" elements.
-**
-** Given k pairs, ranks 2..k (rank 1 is always inserted separately, at the
-** very front of the chain) are produced in the order:
-**   3, 2, 5, 4, 11, 10, 9, 8, 7, 6, 21, 20, ..., 12, 43, ...
-** i.e. each "window" bounded by two consecutive Jacobsthal numbers is
-** walked in descending order.
-*/
+
 std::vector<std::size_t> PmergeMe::jacobsthalInsertOrder(std::size_t pairCount)
 {
 	std::vector<std::size_t> order;
@@ -58,14 +57,7 @@ std::vector<std::size_t> PmergeMe::jacobsthalInsertOrder(std::size_t pairCount)
 	return order;
 }
 
-/*
-** ==========================================================================
-** VECTOR IMPLEMENTATION
-** ==========================================================================
-** These two functions are declared "static" (internal linkage): they are
-** only visible inside this .cpp file. That is what avoids name collisions
-** with the deque implementation below, without needing a namespace.
-*/
+
 static void vecBinaryInsert(std::vector<int> &chain, int value, std::size_t upperBoundIdx)
 {
 	std::vector<int>::iterator begin = chain.begin();
@@ -142,11 +134,7 @@ static std::vector<int> vecFordJohnson(std::vector<int> input)
 	return chain;
 }
 
-/*
-** ==========================================================================
-** DEQUE IMPLEMENTATION (independent from the vector one on purpose)
-** ==========================================================================
-*/
+
 static void dequeBinaryInsert(std::deque<int> &chain, int value, std::size_t upperBoundIdx)
 {
 	std::deque<int>::iterator begin = chain.begin();

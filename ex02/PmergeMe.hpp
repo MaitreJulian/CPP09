@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   PmergeMe.hpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jvenkata <jvenkata@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/08/04 10:20:44 by jvenkata          #+#    #+#             */
+/*   Updated: 2026/08/04 10:20:44 by jvenkata         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PMERGEME_HPP
 #define PMERGEME_HPP
 
@@ -5,14 +17,7 @@
 #include <deque>
 #include <cstddef>
 
-/*
-** PmergeMe implements the Ford-Johnson (merge-insert) sort algorithm.
-**
-** Two completely independent implementations are provided on purpose,
-** one working on std::vector<int> and one working on std::deque<int>,
-** so that two different containers are genuinely exercised instead of
-** relying on a single generic/templated routine.
-*/
+
 class PmergeMe
 {
 	public:

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jvenkata <jvenkata@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/08/04 10:21:04 by jvenkata          #+#    #+#             */
+/*   Updated: 2026/08/04 10:21:04 by jvenkata         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "PmergeMe.hpp"
 #include <iostream>
 #include <sstream>
@@ -10,12 +22,7 @@
 #include <algorithm>
 #include <sys/time.h>
 
-/*
-** Parses one command line token into a positive int.
-** Returns true on success and stores the value in "out".
-** Rejects: empty tokens, non-digit characters (except a leading '+'),
-** values <= 0, and values that overflow an int.
-*/
+
 static bool parsePositiveInt(const std::string &token, int &out)
 {
 	if (token.empty())

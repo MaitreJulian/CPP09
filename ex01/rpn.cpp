@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rpn.cpp                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jvenkata <jvenkata@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/08/04 10:21:09 by jvenkata          #+#    #+#             */
+/*   Updated: 2026/08/04 10:21:09 by jvenkata         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <iostream>
 #include <sstream>
 #include <stack>
@@ -20,7 +32,7 @@ static bool is_operator(const std::string &token)
 static bool apply_operator(std::stack<long> &s, char op)
 {
     if (s.size() < 2)
-        return (false); /* not enough operands */
+        return (false);
 
     long b = s.top(); s.pop();
     long a = s.top(); s.pop();
@@ -32,7 +44,7 @@ static bool apply_operator(std::stack<long> &s, char op)
         res = a - b;
     else if (op == '*')
         res = a * b;
-    else /* '/' */
+    else
     {
         if (b == 0)
             return (false);
